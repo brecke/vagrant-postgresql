@@ -46,6 +46,30 @@ client on your host operating system).
     $ sudo dpkg-reconfigure locales
     
     # reload vagrant
+    
+If these instructions don't allow you to create a UTF8 database, then follow these instructions:
+
+Create a file
+
+		nano /etc/profile.d/lang.sh
+
+		# Add the following
+		export LANGUAGE="en_US.UTF-8"
+		export LANG="en_US.UTF-8"
+		export LC_ALL="en_US.UTF-8"
+
+Save it. Restart shell or run all export commands manually in current shell instance
+Reconfigure so the encoding can be UTF8:
+
+		sudo su postgres
+		psql
+		update pg_database set datistemplate=false where datname='template1';
+		drop database Template1;
+		create database template1 with owner=postgres encoding='UTF-8'
+		lc_collate='en_US.utf8' lc_ctype='en_US.utf8' template template0;
+		update pg_database set datistemplate=true where datname='template1';
+
+Then use template1 for db creation. ([source](http://stackoverflow.com/questions/13115692/encoding-utf8-does-not-match-locale-en-us-the-chosen-lc-ctype-setting-requires))
 
 ## Troubleshooting
 
