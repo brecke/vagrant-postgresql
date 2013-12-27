@@ -32,6 +32,20 @@ client on your host operating system).
 
     psql -h localhost -U postgres --password
     enter password: password
+    
+## Fixing locale settings
+
+    $ sudo nano /etc/bash.bashrc
+
+    # Add these lines to the bottom of the file:
+    export LANGUAGE=en_US.UTF-8
+    export LANG=en_US.UTF-8
+    export LC_ALL=en_US.UTF-8
+
+    $ sudo locale-gen en_US.UTF-8
+    $ sudo dpkg-reconfigure locales
+    
+    # reload vagrant
 
 ## Troubleshooting
 
